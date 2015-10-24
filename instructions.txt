@@ -1,0 +1,16 @@
+bool accept(mot, automate) : Détermine si un automate accepte un mot
+automate determinize(automate) : rendre déterministe un automate -> (Automate
+automate minimize(automate) : minimiser un automate -> Automate
+automate product(automate, automate) : Produit de 2 automates -> Automate
+Opérations sur automates (et, ou, diff)
+Egalité de deux automates
+
+
+Types:
+  - Automate
+  - Mots
+
+ Acceptation:
+  - Lire une lettre (lettre, automate, etat -> etat) (/!\ Si pas de transition)
+  - estAcceptant (automate, état -> bool)
+
