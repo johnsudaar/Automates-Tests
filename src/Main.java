@@ -50,6 +50,11 @@ public class Main {
         aut.lier(2,3,'b');
         aut.lier(3,4,'c');
 
+        Automate k = aut.determinize();
+
+        new AutomateViewer(k,"Det");
+        new AutomateViewer(aut, "Lol");
+
         pass("EMPTY",   Runner.accept(aut,""),        false);
         pass("aabc",    Runner.accept(aut,"aabc"),    true);
         pass("abcaabc", Runner.accept(aut, "abcaabc"),true);

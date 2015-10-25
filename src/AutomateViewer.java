@@ -66,7 +66,7 @@ public class AutomateViewer {
 
         Transformer<String,Paint> vertexColor = new Transformer<String,Paint>() {
             public Paint transform(String i) {
-                if(i.contains("F")) return Color.RED;
+                if(i.contains("F")) return Color.GREEN;
                 return Color.WHITE;
             }
         };
