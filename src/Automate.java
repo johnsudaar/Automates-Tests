@@ -71,4 +71,8 @@ public class Automate {
     public int getInitialNode() {
         return this.initial;
     }
+
+    public int size() {
+        return this.size;
+    }
 }
