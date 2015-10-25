@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /**
  * Point d'entrée d'un programme
@@ -12,7 +11,7 @@ public class Main {
     }
 
     public static void simple1(){
-        Automate aut = new Automate(0, new int[]{3}, 4);
+        Automate aut = new Automate(0, new int[]{3}, 4, new char[]{'a','b','c'});
 
         aut.lier(0,1,'a');
         aut.lier(1,2,'b');
@@ -26,7 +25,7 @@ public class Main {
     }
 
     public static void zeroThenOne(){
-        Automate aut = new Automate(0, new int[]{0,1},2);
+        Automate aut = new Automate(0, new int[]{0,1},2, new char[]{'0','1'});
         aut.lier(0,0,'0');
         aut.lier(0,1,'1');
         aut.lier(1,1,'1');
@@ -41,7 +40,7 @@ public class Main {
     }
 
     public static void digicode(){
-        Automate aut = new Automate(0,new int[]{4},5);
+        Automate aut = new Automate(0,new int[]{4},5, new char[]{'a','b','c'});
         // Cas d'un digicode, on autorise toutes les chaines qui se terminent par aabc
         aut.lier(0,0,'a');
         aut.lier(0,0,'b');

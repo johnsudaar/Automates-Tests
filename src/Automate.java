@@ -9,11 +9,12 @@ public class Automate {
     // Matrice représentant l'automate. A un point nous avons une liste des lettres possibles
     // graph[x][y] -> Liste des lettres de l'état X vers l'état Y
     private ArrayList<ArrayList<ArrayList<Character>>> transitions;
+    private ArrayList<Character> alphabet;
     private int[] acceptants;
     private int initial;
     private int size; // For error detection
 
-    public Automate(int initial, int[] acceptants, int nb_etats){
+    public Automate(int initial, int[] acceptants, int nb_etats, char[] alphabet){
 
         this.size = nb_etats;
 
@@ -32,7 +33,10 @@ public class Automate {
         this.acceptants = acceptants.clone();
 
         // Divers
-
+        this.alphabet = new ArrayList<Character>();
+        for(char c : alphabet) {
+            this.alphabet.add(c);
+        }
         this.initial = initial;
 
     }
@@ -40,7 +44,10 @@ public class Automate {
     // Permet d'ajouter une liaison entre deux noeuds de l'automate
 
     public void lier(int from, int to, char letter){
-        this.transitions.get(from).get(to).add(letter);
+        if(this.alphabet.contains(letter))
+            this.transitions.get(from).get(to).add(letter);
+        else
+            throw new IllegalArgumentException(letter+" is not in the automate alphabet");
     }
 
     // Récupère la liste des caractères possibles entre l'état 1 et l'état 2.
