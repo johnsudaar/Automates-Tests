@@ -89,4 +89,16 @@ public class Automate {
         return d;
     }
 
+    // Permet de savoir si un automate est deterministe
+    public boolean isDeterminist(){
+        for(int i = 0; i < this.size(); i++) {
+            for(char c : this.alphabet()) {
+                if(this.exec(i,c).size() > 1 ) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

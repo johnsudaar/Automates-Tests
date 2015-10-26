@@ -1,3 +1,4 @@
+import javax.rmi.CORBA.Util;
 
 /**
  * Point d'entrée d'un programme
@@ -27,7 +28,16 @@ public class Main {
         Sample.testDigicode(Sample.digicode());
 
         System.out.println("\nPART 2 : Determninize");
-        
+
+        System.out.println("\nTesting determinize function\n");
+        Utilities.pass("Simple 1 : NOT MODIFIED", Sample.simple1().isDeterminist(), true);
+        Utilities.pass("Simple 1 : DETERMINIZED", AutomateTransformer.determinize(Sample.simple1()).isDeterminist(), true);
+        Utilities.pass("ZerosThenOnes : NOT MODIFIED", Sample.zerosThenOnes().isDeterminist(), true);
+        Utilities.pass("ZerosThenOnes : DETERMINIZED", AutomateTransformer.determinize(Sample.zerosThenOnes()).isDeterminist(), true);
+        Utilities.pass("Digicode : NOT MODIFIED", Sample.digicode().isDeterminist(), false);
+        Utilities.pass("Digicode : DETERMINIZED", AutomateTransformer.determinize(Sample.digicode()).isDeterminist(), true);
+
+        System.out.println("\nUnit testing determinized automates\n");
         System.out.println("---- SIMPLE TEST 1 ----");
         Sample.testSimple1(AutomateTransformer.determinize(Sample.simple1()));
         System.out.println("---- ZERO THEN ONE ----");
