@@ -7,89 +7,46 @@
 public class Main {
 
     public static void main(String[] args){
-        testAll();
+        testAll(false);
     }
 
-    public static void simple1(){
-        Automate aut = new Automate(0, new int[]{3}, 4, new char[]{'a','b','c'});
 
-        aut.lier(0,1,'a');
-        aut.lier(1,2,'b');
-        aut.lier(2,3,'c');
 
-        pass("abc", Runner.accept(aut,"abc"), true);
-        pass("a",   Runner.accept(aut, "a"),  false);
-        pass("dba", Runner.accept(aut,"dba"), false);
-        pass("adc", Runner.accept(aut,"adc"), false);
-        pass("ab",  Runner.accept(aut,"ab"),  false);
-    }
-
-    public static void zeroThenOne(){
-        Automate aut = new Automate(0, new int[]{0,1},2, new char[]{'0','1'});
-        aut.lier(0,0,'0');
-        aut.lier(0,1,'1');
-        aut.lier(1,1,'1');
-
-        pass("EMPTY", Runner.accept(aut,""),     true);
-        pass("1",     Runner.accept(aut,"1"),    true);
-        pass("0",     Runner.accept(aut,"0"),    true);
-        pass("000",   Runner.accept(aut,"000"),  true);
-        pass("0011",  Runner.accept(aut,"0011"), true);
-        pass("00101", Runner.accept(aut,"00101"),false);
-        pass("10",    Runner.accept(aut,"10"),   false);
-    }
-
-    public static void digicode(){
-        Automate aut = new Automate(0,new int[]{4},5, new char[]{'a','b','c'});
-        // Cas d'un digicode, on autorise toutes les chaines qui se terminent par aabc
-        aut.lier(0,0,'a');
-        aut.lier(0,0,'b');
-        aut.lier(0,0,'c');
-        aut.lier(0,1,'a');
-        aut.lier(1,2,'a');
-        aut.lier(2,3,'b');
-        aut.lier(3,4,'c');
-
-        Automate k = aut.determinize();
-
-        new AutomateViewer(k,"Det");
-        new AutomateViewer(aut, "Lol");
-
-        pass("EMPTY",   Runner.accept(aut,""),        false);
-        pass("aabc",    Runner.accept(aut,"aabc"),    true);
-        pass("abcaabc", Runner.accept(aut, "abcaabc"),true);
-        pass("aabcabc", Runner.accept(aut, "aabcabc"),false);
-    }
-
-    public static void testAll(){
+    public static void testAll(boolean showGUI){
         System.out.println("************************");
         System.out.println("*       TESTING        *");
         System.out.println("************************");
 
-        System.out.println("PART 1 : DETERMINIST");
+        System.out.println("\nPART 1 : No transform");
 
         System.out.println("---- SIMPLE TEST 1 ----");
-        simple1();
+        Sample.testSimple1(Sample.simple1());
         System.out.println("---- ZERO THEN ONE ----");
-        zeroThenOne();
-
-        System.out.println("PART 2 : NON DETERMINIST");
+        Sample.testZerosThenOnes(Sample.zerosThenOnes());
         System.out.println("----    DIGICODE    ----");
-        digicode();
+        Sample.testDigicode(Sample.digicode());
 
+        System.out.println("\nPART 2 : Determninize");
+        
+        System.out.println("---- SIMPLE TEST 1 ----");
+        Sample.testSimple1(AutomateTransformer.determinize(Sample.simple1()));
+        System.out.println("---- ZERO THEN ONE ----");
+        Sample.testZerosThenOnes(AutomateTransformer.determinize(Sample.zerosThenOnes()));
+        System.out.println("----    DIGICODE    ----");
+        Sample.testDigicode(AutomateTransformer.determinize(Sample.digicode()));
 
-        System.out.println("************************");
+        // Test avec affichage graphique
+        if(showGUI) {
+            new AutomateViewer(AutomateTransformer.determinize(Sample.zerosThenOnes()), "0t1 d");
+            new AutomateViewer(Sample.zerosThenOnes(), "0t1");
+            new AutomateViewer(AutomateTransformer.determinize(Sample.simple1()), "simple1 d");
+            new AutomateViewer(Sample.simple1(), "simple1");
+            new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
+            new AutomateViewer(Sample.digicode(), "digicode");
+        }
+
+        System.out.println("\n************************");
         System.out.println("*     ALL OK (GG)      *");
         System.out.println("************************");
-    }
-
-    public static void pass(String text, boolean state, boolean expected) {
-        if (state == expected)
-            System.out.println(text+" ("+state+"):  OK !");
-        else{
-            System.out.println(text+" ("+state+"):  FAILED!");
-            System.out.println("/!\\ ERRORED ! /!\\ ");
-            System.exit(1);
-        }
     }
 }
