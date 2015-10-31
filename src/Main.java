@@ -1,4 +1,5 @@
-import javax.rmi.CORBA.Util;
+import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Point d'entrée d'un programme
@@ -7,8 +8,31 @@ import javax.rmi.CORBA.Util;
 
 public class Main {
 
-    public static void main(String[] args){
-        testAll(false);
+    public static void main(String[] args) {
+        System.out.println("****************************");
+        System.out.println("*     ILSF : AUTOMATES     *");
+        System.out.println("* Hurter Jonathan - ENSIIE *");
+        System.out.println("****************************");
+        System.out.println("\nActions : ");
+        System.out.println(" 1) Lancer les tests unitaires (sans GUI)");
+        System.out.println(" 2) Lancer les tests unitaires (avec GUI)");
+        System.out.print("\nChoix : ");
+
+        Scanner in = new Scanner(System.in);
+
+        int choice = in.nextInt();
+
+        switch(choice){
+            case 1:
+                testAll(false);
+                break;
+            case 2:
+                testAll(true);
+                break;
+            default:
+                System.out.println("Action inconnue");
+                break;
+        }
     }
 
 
