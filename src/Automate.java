@@ -206,4 +206,8 @@ public class Automate {
 
         return n;
     }
+
+    public boolean acceptEpsilon(){
+        return this.acceptEpsilon;
+    }
 }

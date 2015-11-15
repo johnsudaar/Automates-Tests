@@ -72,6 +72,21 @@ public class Sample {
         return a;
     }
 
+    public static Automate product1(){
+        Automate aut = new Automate(0, new int[]{1}, 2, new char[]{'0','1'});
+        aut.lier(0, 1, '0');
+        aut.lier(1,0,'1');
+        return aut;
+    }
+
+    public static Automate product2(){
+        Automate aut = new Automate(0, new int[]{1}, 2, new char[]{'A','B'});
+        aut.lier(0,1,'A');
+        aut.lier(1,0,'B');
+        return aut;
+    }
+
+
     public static void testSimple1(Automate aut){
         Utilities.pass("abc", Runner.accept(aut,"abc"), true);
         Utilities.pass("a", Runner.accept(aut, "a"), false);

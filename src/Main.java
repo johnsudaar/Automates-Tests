@@ -16,6 +16,7 @@ public class Main {
         System.out.println("\nActions : ");
         System.out.println(" 1) Lancer les tests unitaires (sans GUI)");
         System.out.println(" 2) Lancer les tests unitaires (avec GUI)");
+        System.out.println(" 3) Tester les operations entre graph (GUI)");
         System.out.print("\nChoix : ");
 
         Scanner in = new Scanner(System.in);
@@ -29,13 +30,19 @@ public class Main {
             case 2:
                 testAll(true);
                 break;
+            case 3:
+                testOperations();
             default:
                 System.out.println("Action inconnue");
                 break;
         }
     }
 
-
+    public static void testOperations(){
+        new AutomateViewer(Sample.product1(), "A");
+        new AutomateViewer(Sample.product2(), "B");
+        new AutomateViewer(AutomateCalculator.product(Sample.product1(), Sample.product2()), "A * B");
+    }
 
     public static void testAll(boolean showGUI){
 
