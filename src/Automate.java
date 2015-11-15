@@ -47,8 +47,17 @@ public class Automate {
 
     }
 
-    // Permet d'ajouter une liaison entre deux noeuds de l'automate
+    public int addNode(boolean acceptant){
+        this.transitions.add(this.size, new ArrayList<ArrayList<Character>>());
+        for (int j = 0; j < this.size + 1; j++) {
+            this.transitions.get(this.size).add(j, new ArrayList<Character>());
+            this.transitions.get(j).add(this.size, new ArrayList<Character>());
+        }
+        this.size++;
+        return this.size - 1;
+    }
 
+    // Permet d'ajouter une liaison entre deux noeuds de l'automate
     public void lier(int from, int to, char letter){
         if(this.alphabet.contains(letter) || (letter == EPSILON && this.acceptEpsilon))
             this.transitions.get(from).get(to).add(letter);
@@ -173,4 +182,28 @@ public class Automate {
         return true;
     }
 
+    @Override
+    public Automate clone(){
+        int size = this.acceptEpsilon ? this.alphabet.size() + 1 : this.alphabet.size();
+        char[] a = new char[size];
+        for(int i = 0; i < this.alphabet.size(); i++){
+            a[i] = this.alphabet.get(i);
+        }
+
+        if(this.acceptEpsilon){
+            a[this.alphabet.size()] = EPSILON;
+        }
+
+        Automate n = new Automate(this.initial, this.acceptants.clone(), this.size, a);
+
+        for(int i = 0; i < this.size; i++){
+            for(int j = 0; j < this.size; j++){
+                for(Character c : this.lien(i,j)){
+                    n.lier(i,j,c);
+                }
+            }
+        }
+
+        return n;
+    }
 }

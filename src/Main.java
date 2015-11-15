@@ -43,13 +43,17 @@ public class Main {
 
         if(showGUI) {
             new AutomateViewer(AutomateTransformer.determinize(Sample.zerosThenOnes()), "0t1 d");
+            new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.zerosThenOnes()), "0t1 cd");
             new AutomateViewer(Sample.zerosThenOnes(), "0t1");
             new AutomateViewer(AutomateTransformer.determinize(Sample.simple1()), "simple1 d");
+            new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.simple1()), "simple1 cd");
             new AutomateViewer(Sample.simple1(), "simple1");
             new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
+            new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.digicode()), "digicode cd");
             new AutomateViewer(Sample.digicode(), "digicode");
-            new AutomateViewer(Sample.simpleEpsilon(),"epsilons");
             new AutomateViewer(AutomateTransformer.determinize(Sample.simpleEpsilon()), "epsilons d");
+            new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.simpleEpsilon()), "epsilons cd");
+            new AutomateViewer(Sample.simpleEpsilon(),"epsilons");
         }
 
 
@@ -62,11 +66,11 @@ public class Main {
         System.out.println("---- SIMPLE TEST 1 ----");
         Sample.testSimple1(Sample.simple1());
         System.out.println("---- ZERO THEN ONE ----");
-        Sample.testZerosThenOnes(Sample.zerosThenOnes());
+        Sample.testZerosThenOnes(Sample.zerosThenOnes().clone());
         System.out.println("----    DIGICODE    ----");
         Sample.testDigicode(Sample.digicode());
         System.out.println("----    EPSILONS    ----");
-        Sample.testSimpleEpsilon(Sample.simpleEpsilon());
+        Sample.testSimpleEpsilon(Sample.simpleEpsilon().clone());
 
 
         System.out.println("\nPART 2 : Determninize");
@@ -89,6 +93,24 @@ public class Main {
         Sample.testDigicode(AutomateTransformer.determinize(Sample.digicode()));
         System.out.println("----    EPSILONS    ----");
         Sample.testSimpleEpsilon(AutomateTransformer.determinize(Sample.simpleEpsilon()));
+
+        System.out.println("\nPART 3 : Complete and determinize");
+
+        System.out.println("\nTesting Complete and determinized function\n");
+
+        Utilities.pass("Simple 1", AutomateTransformer.completeAndDeterminize(Sample.simple1()).isDeterminist(), true);
+        Utilities.pass("ZerosThenOnes", AutomateTransformer.completeAndDeterminize(Sample.zerosThenOnes()).isDeterminist(), true);
+        Utilities.pass("Digicode", AutomateTransformer.completeAndDeterminize(Sample.digicode()).isDeterminist(), true);
+        Utilities.pass("SimpleEpsilon : DETERMINIZED", AutomateTransformer.completeAndDeterminize(Sample.simpleEpsilon()).isDeterminist(), true);
+        System.out.println("\nUnit testing determinized automates\n");
+        System.out.println("---- SIMPLE TEST 1 ----");
+        Sample.testSimple1(AutomateTransformer.completeAndDeterminize(Sample.simple1()));
+        System.out.println("---- ZERO THEN ONE ----");
+        Sample.testZerosThenOnes(AutomateTransformer.completeAndDeterminize(Sample.zerosThenOnes()));
+        System.out.println("----    DIGICODE    ----");
+        Sample.testDigicode(AutomateTransformer.completeAndDeterminize(Sample.digicode()));
+        System.out.println("----    EPSILONS    ----");
+        Sample.testSimpleEpsilon(AutomateTransformer.completeAndDeterminize(Sample.simpleEpsilon()));
 
 
         System.out.println("\n************************");

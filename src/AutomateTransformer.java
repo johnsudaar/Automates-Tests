@@ -88,4 +88,21 @@ public class AutomateTransformer {
 
         return a;
     }
+
+    public static Automate completeAndDeterminize(Automate aut){
+        Automate a = AutomateTransformer.determinize(aut);
+        int new_node = -1;
+        for(int i = 0; i < a.size(); i++){
+            for(char c : a.alphabet()){
+                if(a.exec(i,c).isEmpty()){
+                    if(new_node == -1){
+                        new_node = a.addNode(false);
+                    }
+                    a.lier(i,new_node, c);
+                }
+            }
+        }
+
+        return a;
+    }
 }
