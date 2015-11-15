@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 /**
- * Point d'entrée d'un programme
+ * L'intégralité du code est disponible sur github : https://github.com/johnsudaar/Automates-Tests
  * Created by johnsudaar on 24/10/15.
  */
 
@@ -17,6 +17,7 @@ public class Main {
         System.out.println(" 1) Lancer les tests unitaires (sans GUI)");
         System.out.println(" 2) Lancer les tests unitaires (avec GUI)");
         System.out.println(" 3) Tester les operations entre graph (GUI)");
+        System.out.println(" 4) Lancer le code d'exemple");
         System.out.print("\nChoix : ");
 
         Scanner in = new Scanner(System.in);
@@ -32,10 +33,58 @@ public class Main {
                 break;
             case 3:
                 testOperations();
+                break;
+            case 4:
+                sample();
+                break;
             default:
                 System.out.println("Action inconnue");
                 break;
         }
+    }
+
+    public static void sample(){
+        // Ordre des parametres : Initial, Acceptants, nb_etats, Alphabet
+        Automate a = new Automate(0,new int[]{1}, 2, new char[]{'0','1'});
+        a.lier(0,1,'1');
+        a.lier(1,1,'1');
+        a.lier(1,0,'0');
+        a.lier(0,0,'0');
+        // A devrait reconnaitre que les mots qui se terminent par 1
+
+        // Pour tester un mot il nous faut un runner
+        if(Runner.accept(a,"110")){
+            System.out.println("On a bien lu le mot 110 (Il y a un probleme)");
+        } else {
+            System.out.println("Le mot 110 n'est pas reconnu par l'automate (OK)");
+        }
+
+        if(Runner.accept(a,"001")){
+            System.out.println("On a bien lu le mot 001 (OK)");
+        } else {
+            System.out.println("Le mot 001 n'est pas reconnu par l'automate (Il y a un probleme)");
+        }
+
+        // Des automates d'exemples sont disponibles dans la classe Sample.
+
+        // AutomateViewer nous permet de visualiser un automate. L'etat initial est en gros et les etats acceptants sont en vert.
+        new AutomateViewer(Sample.digicode(),"Titre de la fenetre");
+
+        // Determinisation :
+
+        new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "Digicode determinisé");
+
+        // Minification :
+
+        new AutomateViewer(Sample.coursMinimize(), "Avant");
+        new AutomateViewer(AutomateTransformer.minimize(Sample.coursMinimize()), "Apres");
+
+        // Produit d'automate
+
+        Automate i = Sample.product1();
+        Automate j = Sample.product2();
+        Automate ij = AutomateCalculator.product(i,j);
+        new AutomateViewer(ij, "Produit de deux automates");
     }
 
     public static void testOperations(){
