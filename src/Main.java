@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 /**
  * L'intégralité du code est disponible sur github : https://github.com/johnsudaar/Automates-Tests
+ * La visualisation d'un automate necessite la librairie JUNG : http://jung.sourceforge.net/
  * Created by johnsudaar on 24/10/15.
  */
 
