@@ -46,11 +46,12 @@ public class Main {
 
     public static void sample(){
         // Ordre des parametres : Initial, Acceptants, nb_etats, Alphabet
-        Automate a = new Automate(0,new int[]{1}, 2, new char[]{'0','1'});
+        Automate a = new Automate(0,new int[]{2}, 3, new char[]{'0','1', Automate.EPSILON});
         a.lier(0,1,'1');
         a.lier(1,1,'1');
         a.lier(1,0,'0');
         a.lier(0,0,'0');
+        a.lier(1,2, Automate.EPSILON);
         // A devrait reconnaitre que les mots qui se terminent par 1
 
         // Pour tester un mot il nous faut un runner
