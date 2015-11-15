@@ -53,6 +53,25 @@ public class Sample {
         return aut;
     }
 
+    public static Automate coursMinimize(){
+        Automate a = new Automate(0,new int[]{0,1},6,new char[]{'0','1'});
+
+        a.lier(0,1,'0');
+        a.lier(1,1,'0');
+        a.lier(3,1,'1');
+        a.lier(3,3,'0');
+        a.lier(1,2,'1');
+        a.lier(2,3,'1');
+        a.lier(2,4,'0');
+        a.lier(4,2,'0');
+        a.lier(0,4,'1');
+        a.lier(4,5,'1');
+        a.lier(5,5,'0');
+        a.lier(5,0,'1');
+
+        return a;
+    }
+
     public static void testSimple1(Automate aut){
         Utilities.pass("abc", Runner.accept(aut,"abc"), true);
         Utilities.pass("a", Runner.accept(aut, "a"), false);

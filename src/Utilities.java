@@ -36,4 +36,20 @@ public class Utilities {
         Collections.sort(b);
         return a.equals(b);
     }
+
+    public static int[] toIntArray(Integer[] a){
+        int[] r = new int[a.length];
+        for(int i = 0; i < a.length; i++){
+            r[i] = a[i];
+        }
+        return r;
+    }
+
+    public static char[] toCharArray(Character[] a){
+        char[] r = new char[a.length];
+        for(int i = 0; i < a.length; i++){
+            r[i] = a[i];
+        }
+        return r;
+    }
 }

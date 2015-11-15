@@ -1,6 +1,3 @@
-import javax.rmi.CORBA.Util;
-import java.awt.*;
-import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -11,6 +8,7 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+
         System.out.println("****************************");
         System.out.println("*     ILSF : AUTOMATES     *");
         System.out.println("* Hurter Jonathan - ENSIIE *");
@@ -44,15 +42,19 @@ public class Main {
         if(showGUI) {
             new AutomateViewer(AutomateTransformer.determinize(Sample.zerosThenOnes()), "0t1 d");
             new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.zerosThenOnes()), "0t1 cd");
+            new AutomateViewer(AutomateTransformer.minimize(Sample.zerosThenOnes()), "0t1 m");
             new AutomateViewer(Sample.zerosThenOnes(), "0t1");
             new AutomateViewer(AutomateTransformer.determinize(Sample.simple1()), "simple1 d");
             new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.simple1()), "simple1 cd");
+            new AutomateViewer(AutomateTransformer.minimize(Sample.simple1()), "simple1 m");
             new AutomateViewer(Sample.simple1(), "simple1");
             new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
             new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.digicode()), "digicode cd");
+            new AutomateViewer(AutomateTransformer.minimize(Sample.digicode()), "digicode m");
             new AutomateViewer(Sample.digicode(), "digicode");
             new AutomateViewer(AutomateTransformer.determinize(Sample.simpleEpsilon()), "epsilons d");
             new AutomateViewer(AutomateTransformer.completeAndDeterminize(Sample.simpleEpsilon()), "epsilons cd");
+            new AutomateViewer(AutomateTransformer.minimize(Sample.simpleEpsilon()), "epsilons m");
             new AutomateViewer(Sample.simpleEpsilon(),"epsilons");
         }
 
@@ -112,6 +114,16 @@ public class Main {
         System.out.println("----    EPSILONS    ----");
         Sample.testSimpleEpsilon(AutomateTransformer.completeAndDeterminize(Sample.simpleEpsilon()));
 
+        System.out.println("\nPART 4 : Minimize");
+
+        System.out.println("---- SIMPLE TEST 1 ----");
+        Sample.testSimple1(AutomateTransformer.minimize(Sample.simple1()));
+        System.out.println("---- ZERO THEN ONE ----");
+        Sample.testZerosThenOnes(AutomateTransformer.minimize(Sample.zerosThenOnes().clone()));
+        System.out.println("----    DIGICODE    ----");
+        Sample.testDigicode(AutomateTransformer.minimize(Sample.digicode()));
+        System.out.println("----    EPSILONS    ----");
+        Sample.testSimpleEpsilon(AutomateTransformer.minimize(Sample.simpleEpsilon().clone()));
 
         System.out.println("\n************************");
         System.out.println("*     ALL OK (GG)      *");
