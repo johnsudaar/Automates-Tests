@@ -13,4 +13,3 @@ Types:
  Acceptation:
   - Lire une lettre (lettre, automate, etat -> etat) (/!\ Si pas de transition)
   - estAcceptant (automate, état -> bool)
-

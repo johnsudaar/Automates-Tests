@@ -38,6 +38,17 @@ public class Main {
 
 
     public static void testAll(boolean showGUI){
+
+        if(showGUI) {
+            new AutomateViewer(AutomateTransformer.determinize(Sample.zerosThenOnes()), "0t1 d");
+            new AutomateViewer(Sample.zerosThenOnes(), "0t1");
+            new AutomateViewer(AutomateTransformer.determinize(Sample.simple1()), "simple1 d");
+            new AutomateViewer(Sample.simple1(), "simple1");
+            new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
+            new AutomateViewer(Sample.digicode(), "digicode");
+        }
+
+
         System.out.println("************************");
         System.out.println("*       TESTING        *");
         System.out.println("************************");
@@ -68,16 +79,6 @@ public class Main {
         Sample.testZerosThenOnes(AutomateTransformer.determinize(Sample.zerosThenOnes()));
         System.out.println("----    DIGICODE    ----");
         Sample.testDigicode(AutomateTransformer.determinize(Sample.digicode()));
-
-        // Test avec affichage graphique
-        if(showGUI) {
-            new AutomateViewer(AutomateTransformer.determinize(Sample.zerosThenOnes()), "0t1 d");
-            new AutomateViewer(Sample.zerosThenOnes(), "0t1");
-            new AutomateViewer(AutomateTransformer.determinize(Sample.simple1()), "simple1 d");
-            new AutomateViewer(Sample.simple1(), "simple1");
-            new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
-            new AutomateViewer(Sample.digicode(), "digicode");
-        }
 
         System.out.println("\n************************");
         System.out.println("*     ALL OK (GG)      *");

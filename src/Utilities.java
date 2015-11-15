@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -13,6 +14,11 @@ public class Utilities {
         else{
             System.out.println(text+" ("+state+"):  FAILED!");
             System.out.println("/!\\ ERRORED ! /!\\ ");
+            try {
+                System.in.read();
+            }catch(IOException e){
+
+            }
             System.exit(1);
         }
     }

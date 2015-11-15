@@ -12,7 +12,9 @@ public class Automate {
     private ArrayList<Character> alphabet;
     private int[] acceptants;
     private int initial;
-    private int size; // For error detection
+    private int size;
+
+    public static char EPSILON = '\0';
 
     public Automate(int initial, int[] acceptants, int nb_etats, char[] alphabet){
 
@@ -57,21 +59,82 @@ public class Automate {
 
     // Retourne la liste des noeuds possibles en partant du noeud from et en lisant la lettre C
     public ArrayList<Integer> exec(int from, char c) {
+
+        ArrayList<Integer> epsilonBacklog = new ArrayList<Integer>();
+        ArrayList<Integer> marqued = new ArrayList<Integer>();
+
         ArrayList<Integer> liste = new ArrayList<Integer>();
         for(int i = 0; i < this.size; i++)  {
             if (this.lien(from, i).contains(c)) {
                 liste.add(i);
             }
+            if(this.lien(from, i).contains(EPSILON)){
+                epsilonBacklog.add(i);
+            }
         }
+
+        while(! epsilonBacklog.isEmpty()){
+            int currentNode = epsilonBacklog.get(0);
+            epsilonBacklog.remove(0);
+
+            marqued.add(currentNode);
+            for(int i = 0 ; i < this.size ; i++) {
+                if(this.lien(currentNode, i).contains(c)){
+                    if(! liste.contains(i)){
+                        liste.add(i);
+                    }
+                }
+
+                if(! marqued.contains(i)){
+                    if(this.lien(currentNode, i).contains(EPSILON)){
+                        epsilonBacklog.add(i);
+                    }
+                }
+            }
+        }
+
         return liste;
     }
 
-    public boolean isAcceptant(int state){
+    private boolean isDirectlyAcceptant(int state){
         for (int i = 0; i < this.acceptants.length; i++) {
             if(this.acceptants[i] == state) {
                 return true;
             }
         }
+        return false;
+    }
+
+    public boolean isAcceptant(int state){
+        ArrayList<Integer> marqued = new ArrayList<Integer>();
+        ArrayList<Integer> epsilonBacklog = new ArrayList<Integer>();
+
+        if(this.isDirectlyAcceptant(state)){
+            return true;
+        }
+
+        marqued.add(state);
+
+        for(int i = 0; i < this.size; i++){
+            if(this.lien(state, i).contains(EPSILON)) {
+                epsilonBacklog.add(i);
+            }
+        }
+
+        while(! epsilonBacklog.isEmpty()){
+            int currentNode = epsilonBacklog.get(0);
+            epsilonBacklog.remove(0);
+            marqued.add(currentNode);
+            if(this.isDirectlyAcceptant(currentNode)){
+                return true;
+            }
+            for(int i = 0 ; i < this.size; i++){
+                if(! marqued.contains(i) && this.lien(currentNode,i).contains(EPSILON)){
+                    epsilonBacklog.add(i);
+                }
+            }
+        }
+
         return false;
     }
 
