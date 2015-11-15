@@ -112,7 +112,11 @@ public class AutomateViewer {
                 ArrayList<Character> chars = aut.lien(x, y);
                 String s = "";
                 for(char c : chars) {
-                    s += c+",";
+                    if(c != Automate.EPSILON) {
+                        s += c + ",";
+                    }else {
+                        s += "EPS,";
+                    }
                 }
                 if(s.length() != 0) {
                     s=s.substring(0,s.length() - 1)+":"+x+":"+y;

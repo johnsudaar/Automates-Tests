@@ -13,6 +13,7 @@ public class Automate {
     private int[] acceptants;
     private int initial;
     private int size;
+    private boolean acceptEpsilon = false;
 
     public static char EPSILON = '\0';
 
@@ -37,7 +38,10 @@ public class Automate {
         // Divers
         this.alphabet = new ArrayList<Character>();
         for(char c : alphabet) {
-            this.alphabet.add(c);
+            if(c == EPSILON)
+                this.acceptEpsilon = true;
+            else
+                this.alphabet.add(c);
         }
         this.initial = initial;
 
@@ -46,7 +50,7 @@ public class Automate {
     // Permet d'ajouter une liaison entre deux noeuds de l'automate
 
     public void lier(int from, int to, char letter){
-        if(this.alphabet.contains(letter))
+        if(this.alphabet.contains(letter) || (letter == EPSILON && this.acceptEpsilon))
             this.transitions.get(from).get(to).add(letter);
         else
             throw new IllegalArgumentException(letter+" is not in the automate alphabet");
@@ -157,6 +161,11 @@ public class Automate {
         for(int i = 0; i < this.size(); i++) {
             for(char c : this.alphabet()) {
                 if(this.exec(i,c).size() > 1 ) {
+                    return false;
+                }
+            }
+            for(int j = 0 ; j < this.size; j++) {
+                if (this.lien(i,j).contains(EPSILON)){
                     return false;
                 }
             }

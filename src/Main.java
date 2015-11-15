@@ -1,3 +1,5 @@
+import javax.rmi.CORBA.Util;
+import java.awt.*;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -46,6 +48,8 @@ public class Main {
             new AutomateViewer(Sample.simple1(), "simple1");
             new AutomateViewer(AutomateTransformer.determinize(Sample.digicode()), "digicode d");
             new AutomateViewer(Sample.digicode(), "digicode");
+            new AutomateViewer(Sample.simpleEpsilon(),"epsilons");
+            new AutomateViewer(AutomateTransformer.determinize(Sample.simpleEpsilon()), "epsilons d");
         }
 
 
@@ -61,6 +65,9 @@ public class Main {
         Sample.testZerosThenOnes(Sample.zerosThenOnes());
         System.out.println("----    DIGICODE    ----");
         Sample.testDigicode(Sample.digicode());
+        System.out.println("----    EPSILONS    ----");
+        Sample.testSimpleEpsilon(Sample.simpleEpsilon());
+
 
         System.out.println("\nPART 2 : Determninize");
 
@@ -71,7 +78,8 @@ public class Main {
         Utilities.pass("ZerosThenOnes : DETERMINIZED", AutomateTransformer.determinize(Sample.zerosThenOnes()).isDeterminist(), true);
         Utilities.pass("Digicode : NOT MODIFIED", Sample.digicode().isDeterminist(), false);
         Utilities.pass("Digicode : DETERMINIZED", AutomateTransformer.determinize(Sample.digicode()).isDeterminist(), true);
-
+        Utilities.pass("SimpleEpsilon : NOT MODIFIED", Sample.simpleEpsilon().isDeterminist(), false);
+        Utilities.pass("SimpleEpsilon : DETERMINIZED", AutomateTransformer.determinize(Sample.simpleEpsilon()).isDeterminist(), true);
         System.out.println("\nUnit testing determinized automates\n");
         System.out.println("---- SIMPLE TEST 1 ----");
         Sample.testSimple1(AutomateTransformer.determinize(Sample.simple1()));
@@ -79,6 +87,9 @@ public class Main {
         Sample.testZerosThenOnes(AutomateTransformer.determinize(Sample.zerosThenOnes()));
         System.out.println("----    DIGICODE    ----");
         Sample.testDigicode(AutomateTransformer.determinize(Sample.digicode()));
+        System.out.println("----    EPSILONS    ----");
+        Sample.testSimpleEpsilon(AutomateTransformer.determinize(Sample.simpleEpsilon()));
+
 
         System.out.println("\n************************");
         System.out.println("*     ALL OK (GG)      *");
